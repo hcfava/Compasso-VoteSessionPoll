@@ -5,13 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.ValidationException;
 
 import br.com.compasso.poll.enumeration.OptionVote;
+import br.com.compasso.poll.enumeration.VoteSessionStatus;
+import br.com.compasso.poll.repository.VoteRepository;
 
 @Entity
 public class VoteSession {
@@ -20,7 +24,8 @@ public class VoteSession {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime startTime = LocalDateTime.now();
-	private boolean sessionOpen = true;
+	@Enumerated
+	private VoteSessionStatus status = VoteSessionStatus.OPEN;
 	@OneToMany
 	private Set<Vote> votes = new HashSet<Vote>();
 	@OneToOne
@@ -34,12 +39,13 @@ public class VoteSession {
 		this.id = id;
 	}
 
-	public boolean isSessionOpen() {
-		return sessionOpen;
+	
+	public VoteSessionStatus getStatus() {
+		return status;
 	}
 
-	public void closeSessionOpen() {
-		this.sessionOpen = false;
+	public void CloseVoteSession() {
+		this.status = VoteSessionStatus.CLOSED;
 	}
 
 	public Set<Vote> getVotes() {
@@ -74,6 +80,17 @@ public class VoteSession {
 		long count = votes.stream().filter(vote -> vote.getOptionVote().equals(OptionVote.NAO)).count();
 
 		return count;
+	}
+
+	public boolean addVote(Vote vote, VoteRepository voteRepository) {
+		if(votes.add(vote)) {
+			voteRepository.save(vote);
+			return true;
+		}else
+			throw new ValidationException("Esse associado já votou nesta pauta");
+		
+			
+		
 	}
 
 }

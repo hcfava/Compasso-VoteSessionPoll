@@ -1,5 +1,6 @@
 package br.com.compasso.poll.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String email;
-	private String password;
+	@Column(unique=true)
+	private String cpf;
+
+	public User() {
+		
+	}
+	
+	public User(String name2, String cpf2) {
+		this.cpf = cpf2;
+		this.name = name2;
+	}
 
 	public Long getId() {
 		return id;
@@ -31,20 +41,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	@Override

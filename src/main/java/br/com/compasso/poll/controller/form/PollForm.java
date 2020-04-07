@@ -3,17 +3,15 @@ package br.com.compasso.poll.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import br.com.compasso.poll.model.Poll;
 
 public class PollForm {
 
 	@NotNull
 	@NotEmpty
-	@Length(min = 5)
 	private String subject;
 	@NotNull
 	@NotEmpty
-	@Length(min = 10)
 	private String description;
 
 	public String getSubject() {
@@ -22,6 +20,10 @@ public class PollForm {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public Poll toPoll() {
+		return new Poll(subject, description);
 	}
 
 }

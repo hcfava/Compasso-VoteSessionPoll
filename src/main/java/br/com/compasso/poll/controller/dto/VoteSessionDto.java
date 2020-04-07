@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.compasso.poll.enumeration.VoteSessionStatus;
 import br.com.compasso.poll.model.VoteSession;
 
 public class VoteSessionDto {
@@ -14,6 +15,7 @@ public class VoteSessionDto {
 	private Long yesPollVotes;
 	private Long noPollVotes;
 	private LocalDateTime creationDate;
+	private VoteSessionStatus status;
 
 	public VoteSessionDto(VoteSession voteSession) {
 		this.pollSubject = voteSession.getPoll().getSubject();
@@ -22,6 +24,7 @@ public class VoteSessionDto {
 		this.yesPollVotes = voteSession.countYesVotes();
 		this.noPollVotes = voteSession.countNoVotes();
 		this.creationDate = voteSession.getStartTime();
+		this.status = voteSession.getStatus();
 	}
 
 	public String getPollSubject() {
@@ -46,6 +49,10 @@ public class VoteSessionDto {
 
 	public LocalDateTime getCreationDate() {
 		return creationDate;
+	}
+
+	public VoteSessionStatus getStatus() {
+		return status;
 	}
 
 	public static List<VoteSessionDto> convert(List<VoteSession> voteSessions) {

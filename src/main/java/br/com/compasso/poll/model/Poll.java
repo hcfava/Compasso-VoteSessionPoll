@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Poll {
@@ -13,6 +15,15 @@ public class Poll {
 	private Long id;
 	private String subject;
 	private String description;
+	
+	public Poll() {
+		
+	}
+
+	public Poll(@NotNull @NotEmpty String subject2, @NotNull @NotEmpty String description2) {
+		this.subject = subject2;
+		this.description = description2;
+	}
 
 	public Long getId() {
 		return id;

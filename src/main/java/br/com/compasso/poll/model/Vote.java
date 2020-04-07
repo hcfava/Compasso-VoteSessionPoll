@@ -15,11 +15,15 @@ public class Vote {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@Enumerated
 	private OptionVote optionVote;
 	@ManyToOne
 	private User user;
+	
+	public Vote(User user2, OptionVote valueOf) {
+		this.user = user2;
+		this.optionVote = valueOf;
+	}
 
 	public Long getId() {
 		return id;
