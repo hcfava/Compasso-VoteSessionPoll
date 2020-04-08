@@ -20,6 +20,10 @@ public class Vote {
 	@ManyToOne
 	private User user;
 	
+	public Vote() {
+		
+	}
+	
 	public Vote(User user2, OptionVote valueOf) {
 		this.user = user2;
 		this.optionVote = valueOf;
@@ -53,7 +57,6 @@ public class Vote {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((optionVote == null) ? 0 : optionVote.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -67,8 +70,6 @@ public class Vote {
 		if (getClass() != obj.getClass())
 			return false;
 		Vote other = (Vote) obj;
-		if (optionVote != other.optionVote)
-			return false;
 		if (user == null) {
 			if (other.user != null)
 				return false;
@@ -77,4 +78,5 @@ public class Vote {
 		return true;
 	}
 
+	
 }

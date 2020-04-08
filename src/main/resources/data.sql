@@ -1,0 +1,3 @@
+INSERT INTO USER(name, cpf) VALUES('Henrique', '12345678900');
+INSERT INTO USER(name, cpf) VALUES('Joao', '12345678901');
+INSERT INTO USER(name, cpf) VALUES('Maria', '12345678902');

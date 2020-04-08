@@ -2,6 +2,7 @@ package br.com.compasso.poll.model;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,12 +25,27 @@ public class VoteSession {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime startTime = LocalDateTime.now();
+	private LocalDateTime endTime;
+	private final Long DEFAULT_TIME = 1000l;
 	@Enumerated
 	private VoteSessionStatus status = VoteSessionStatus.OPEN;
 	@OneToMany
 	private Set<Vote> votes = new HashSet<Vote>();
 	@OneToOne
 	private Poll poll;
+
+	public VoteSession() {
+		
+	}
+	
+	public VoteSession(Poll poll2, Long voteSessionTime) {
+		this.poll = poll2;
+		this.endTime = startTime.plusMinutes(Optional.ofNullable(voteSessionTime).orElse(DEFAULT_TIME));
+	}
+	
+	public LocalDateTime getEndTime() {
+		return endTime;
+	}
 
 	public Long getId() {
 		return id;
@@ -39,7 +55,6 @@ public class VoteSession {
 		this.id = id;
 	}
 
-	
 	public VoteSessionStatus getStatus() {
 		return status;
 	}
@@ -83,14 +98,12 @@ public class VoteSession {
 	}
 
 	public boolean addVote(Vote vote, VoteRepository voteRepository) {
-		if(votes.add(vote)) {
+		if (votes.add(vote)) {
 			voteRepository.save(vote);
 			return true;
-		}else
+		} else
 			throw new ValidationException("Esse associado já votou nesta pauta");
-		
-			
-		
+
 	}
 
 }

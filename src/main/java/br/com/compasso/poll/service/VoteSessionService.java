@@ -25,4 +25,8 @@ public class VoteSessionService {
 			return voteSession.get();
 		return null;
 	}
+	
+	public void save(VoteSession voteSession) {
+		voteSessionRepository.save(voteSession);
+	}
 }
