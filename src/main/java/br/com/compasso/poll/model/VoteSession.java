@@ -105,5 +105,4 @@ public class VoteSession {
 			throw new ValidationException("Esse associado já votou nesta pauta");
 
 	}
-
 }

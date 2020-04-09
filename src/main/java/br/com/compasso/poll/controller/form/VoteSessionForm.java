@@ -3,9 +3,9 @@ package br.com.compasso.poll.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.compasso.poll.controller.service.PollService;
 import br.com.compasso.poll.model.Poll;
 import br.com.compasso.poll.model.VoteSession;
+import br.com.compasso.poll.service.PollService;
 
 public class VoteSessionForm {
 

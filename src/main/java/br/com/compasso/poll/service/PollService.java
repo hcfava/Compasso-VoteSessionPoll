@@ -1,4 +1,4 @@
-package br.com.compasso.poll.controller.service;
+package br.com.compasso.poll.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

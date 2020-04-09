@@ -18,8 +18,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.compasso.poll.controller.dto.VoteSessionDto;
 import br.com.compasso.poll.controller.form.VoteSessionForm;
-import br.com.compasso.poll.controller.service.PollService;
 import br.com.compasso.poll.model.VoteSession;
+import br.com.compasso.poll.service.PollService;
 import br.com.compasso.poll.service.VoteSessionService;
 
 @RestController
