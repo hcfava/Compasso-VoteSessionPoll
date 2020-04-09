@@ -26,7 +26,7 @@ public class VoteSession {
 	private Long id;
 	private LocalDateTime startTime = LocalDateTime.now();
 	private LocalDateTime endTime;
-	private final Long DEFAULT_TIME = 1000l;
+	private final Long DEFAULT_TIME = 1l;
 	@Enumerated
 	private VoteSessionStatus status = VoteSessionStatus.OPEN;
 	@OneToMany
