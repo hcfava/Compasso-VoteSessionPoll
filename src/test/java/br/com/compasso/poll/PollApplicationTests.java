@@ -1,18 +1,14 @@
 package br.com.compasso.poll;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
 
-import java.lang.annotation.Retention;
 import java.util.Set;
 
 import javax.validation.ValidationException;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.compasso.poll.builder.VoteSessionCreator;
@@ -20,9 +16,10 @@ import br.com.compasso.poll.enumeration.OptionVote;
 import br.com.compasso.poll.model.User;
 import br.com.compasso.poll.model.Vote;
 import br.com.compasso.poll.model.VoteSession;
+import br.com.compasso.poll.repository.VoteRepository;
 
 @SpringBootTest
-class PollApplicationTests {
+public class PollApplicationTests {
 
 	private User henrique;
 	private User maria;
@@ -36,22 +33,19 @@ class PollApplicationTests {
 	}
 	
 	@Test
-	void AceitaUmVoto() {
-		VoteSession voteSession = new VoteSessionCreator().poll("subject", "description").vote(joao, OptionVote.SIM).create();
+	public void AceitaUmVoto() {
+		VoteRepository voteRepository = mock(VoteRepository.class);
+		VoteSession voteSession = new VoteSessionCreator().poll("subject", "description").vote(joao, OptionVote.SIM, voteRepository).create();
 		
 		Set<Vote> votes = voteSession.getVotes();
 		assertEquals(1, votes.size());
 	}
 	
-	@Rule
-	ExpectedException exception = ExpectedException.none();
-	@Test
-	void NãoAceitaVotosDoMesmoUsuário() {
-		VoteSession voteSession = new VoteSessionCreator().poll("subject", "description").vote(maria, OptionVote.SIM).create();
-		voteSession.addVote(new Vote(maria, OptionVote.SIM));
-		
-		
-		exception.expect(ValidationException.class);
+	@Test(expected = ValidationException.class)
+	public void NãoAceitaVotosDoMesmoUsuárioNaMesmaSessao() {
+		VoteRepository voteRepository = mock(VoteRepository.class);
+		VoteSession voteSession = new VoteSessionCreator().poll("subject", "description").vote(maria, OptionVote.SIM, voteRepository).create();
+		voteSession.addVote(new Vote(maria, OptionVote.SIM), voteRepository);
 		
 	}
 

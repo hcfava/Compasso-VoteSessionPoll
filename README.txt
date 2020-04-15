@@ -30,7 +30,7 @@ identificado por um id único e pode votar apenas uma vez por pauta);
     ---enumeration
     ---exception
     ---repository
-    ---servic
+    ---service
 
 
     Lambda; Optional; Streams; Test Unit Clean Code;
