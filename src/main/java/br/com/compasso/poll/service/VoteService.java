@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.compasso.poll.controller.form.VoteForm;
+import br.com.compasso.poll.enumeration.VoteSessionStatus;
 import br.com.compasso.poll.model.User;
 import br.com.compasso.poll.model.Vote;
 import br.com.compasso.poll.model.VoteSession;
@@ -36,6 +37,6 @@ public class VoteService {
 	}
 	
 	private boolean sessionIsClosed(VoteSession voteSession) {
-		return voteSession.getEndTime().isBefore(LocalDateTime.now());
+		return (voteSession.getEndTime().isBefore(LocalDateTime.now()) || voteSession.getStatus() == VoteSessionStatus.CLOSED);
 	}
 }
